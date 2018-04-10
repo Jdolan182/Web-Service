@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.math.BigInteger"/>
+<fullyQualifiedTypeName name="music.Composer"/>
+<fullyQualifiedTypeName name="music.MusicServiceStub.ErrorMessage"/>
+<fullyQualifiedTypeName name="music.MusicServiceStub"/>
+<fullyQualifiedTypeName name="java.rmi.RemoteException"/>
+</qualifiedTypeNameHistroy>

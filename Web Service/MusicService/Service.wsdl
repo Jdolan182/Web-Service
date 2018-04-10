@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions name="MusicDefinitions"
+ targetNamespace="urn:Music"
+ xmlns="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:music="urn:Music"
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <types>
+
+    <xsd:schema
+     targetNamespace="urn:Music"
+     xmlns="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<!-- (1) defined complex types -->
+	
+ 		<xsd:complexType name="trackDetail">
+ 			<xsd:sequence>
+ 				<xsd:element name="discNumber" type="xsd:string"/>
+ 				<xsd:element name="trackNumber" type="xsd:string"/>
+ 				<xsd:element name="composerName" type="xsd:string"/>
+ 				<xsd:element name="workName" type="xsd:string"/>
+ 				<xsd:element name="titleName" type="xsd:string"/>
+ 			</xsd:sequence>
+ 		</xsd:complexType>
+                      
+
+ 		<xsd:complexType name="trackDetails">
+ 			<xsd:sequence>
+ 				<xsd:element  minOccurs='0' maxOccurs='unbounded' name="tracklist" type="music:trackDetail"/>
+ 			</xsd:sequence>
+ 		</xsd:complexType>
+ 
+ 	 	
+ 	 <!-- (2) defined elements used for messages -->
+           
+    	<xsd:element name="composer" type="xsd:string"/>
+    	<xsd:element name="disc" type="xsd:string"/>
+    
+    	<xsd:element name="track" type="music:trackDetail"/>
+		<xsd:element name="tracks" type="music:trackDetails"/>
+		
+		<xsd:element name="errorMessage" type="xsd:string"/>
+
+    </xsd:schema>
+ 
+  </types>
+    
+
+	<!-- (3) defined messages -->
+	
+    <message name="getComposerMessage">
+    	<part name="body" element="music:composer"/>
+  	</message>
+  	
+  	<message name="composerReturnMessage">
+    	<part name="body" element="music:tracks"/>
+  	</message>
+ 	
+ 	<message name="getDiscMessage">
+    	<part name="body" element="music:disc"/>
+  	</message>
+  	
+  	<message name="discReturnMessage">
+    	<part name="body" element="music:tracks"/>
+  	</message>
+  	
+  	<message name="errorFault">
+  		<part name="errorPart" element="music:errorMessage"/>
+  	</message>
+  	
+
+	<!-- (4) defined portType and operations -->
+	
+	<portType name="musicPort">
+    	<operation name="getByComposer">
+			<input message="music:getComposerMessage"/>
+			<output message="music:composerReturnMessage"/>
+			<fault name="error" message="music:errorFault"/>
+   		</operation>
+   		
+   		<operation name="getByDisc">
+			<input message="music:getDiscMessage"/>
+			<output message="music:discReturnMessage"/>
+			<fault name="error" message="music:errorFault"/>
+   		</operation>
+    </portType>
+	
+	
+	<!-- (5) defined binding -->
+	    
+    <binding name="musicBinding" type="music:musicPort">
+   		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    	<operation name="getByComposer">
+    		<soap:operation soapAction="" style="document"/>
+      			<input>
+					<soap:body use="literal" namespace="urn:Music"
+					 encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      			</input>
+      			<output>
+					<soap:body use="literal" namespace="urn:Music"
+					 encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      			</output>
+      			<fault name="error">
+      				<soap:body use="literal" namespace="urn:Music"
+	 				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+	 			</fault>
+   		</operation>
+   		
+   		<operation name="getByDisc">	
+    		<soap:operation soapAction="" style="document"/>
+      			<input>
+					<soap:body use="literal" namespace="urn:Music"
+					 encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      			</input>
+      			<output>
+					<soap:body use="literal" namespace="urn:Music"
+					 encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      			</output>
+      			<fault name="error">
+      				<soap:body use="literal" namespace="urn:Music"
+	 				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+	 			</fault>
+   		</operation>
+    </binding>
+
+
+	<!-- (6) defined Music Service -->
+   
+    <service name="MusicService">
+    	<port name="MusicPort" binding="music:musicBinding">
+      		<soap:address location="http://127.0.0.1:8080/axis2/services/MusicService"/>
+   		</port>
+  	</service>
+
+
+</definitions>

@@ -1,0 +1,1 @@
+K:\CSCU9YW\axis2-1.6.4\bin\WSDL2Java.bat -uri Service.wsdl -d adb -s
